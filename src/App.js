@@ -10,6 +10,8 @@ import Movies from './components/Layouts/card/Movies';
 import Prof from './components/Layouts/card/Prof';
 import Books from './components/Layouts/card/Books';
 
+import Appointment from './components/Layouts/Pages/Appointment';
+
 
 
 function App() {
@@ -56,7 +58,9 @@ function App() {
               <Route path="/raises" element={<Heveview userId={userId} />} />
               <Route path='/movies' element={<Movies/>}/>
               <Route path='/books' element={<Books/>}/>
-              <Route path='/prof' element={<Prof/>}/>
+              <Route path='/prof' element={<Prof userId={userId}/>}/>
+              <Route path='/appointment' element={<Appointment userId={userId}/>}/>
+          
             </>
           ) : (
             <Route path="*" element={<Navigate to="/login" />} />

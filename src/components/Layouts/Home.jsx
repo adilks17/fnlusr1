@@ -16,7 +16,7 @@ const Home = () => {
         <a href="#aboutus"> <button>Know more</button></a> 
       </div>
       <div class="image">
-        <img src="https://static.vecteezy.com/system/resources/previews/003/689/220/non_2x/online-registration-or-sign-up-login-for-account-on-smartphone-app-user-interface-with-secure-password-mobile-application-for-ui-web-banner-access-cartoon-people-illustration-vector.jpg"/>
+        <img src="https://static.vecteezy.com/system/resources/previews/003/689/220/non_2x/online-registration-or-sign-up-login-for-account-on-smartphone-app-user-interface-with-secure-password-mobile-application-for-ui-web-banner-access-cartoon-people-illustration-vector.jpg" alt=''/>
       </div>
      
     </div>
@@ -41,7 +41,7 @@ const Home = () => {
 </div>
 <div class="container">
 <div class="image">
-        <img src={logo} style={{width:'800px', height: '450px',marginRight: '16px' }}/>
+        <img src={logo} style={{width:'800px', height: '450px',marginRight: '16px' }} alt=''/>
       </div>
       <div class="info">
         <h1>Connect with Professionals</h1>

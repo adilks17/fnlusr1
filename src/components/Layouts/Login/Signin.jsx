@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './Signin.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useMediaQuery } from '@mui/material';
+
 
 const Signin = ({ onLoginSuccess }) => {
   const [inputs, setInputs] = useState({ username: '', password: '' });
   const [rememberMe, setRememberMe] = useState(false); // State to remember user
   const navigate = useNavigate();
-  const isLargeScreen = useMediaQuery('(min-width: 600px)');
+  // const isLargeScreen = useMediaQuery('(min-width: 600px)');
 
   useEffect(() => {
     const rememberedUser = JSON.parse(localStorage.getItem('rememberedUser'));

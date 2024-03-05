@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { AppBar, Box, Button, CssBaseline, Divider, Drawer, FormControl, IconButton, List, ListItem, ListItemButton, ListItemText, MenuItem, Select, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
+import React, { useState } from 'react';
+import { AppBar, Box, Button, CssBaseline, Divider, Drawer, FormControl, IconButton,List, ListItem, ListItemButton, ListItemText, MenuItem, Select, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import DragHandleIcon from '@mui/icons-material/DragHandle';
 import logo from './logo.png';
 import { InputAdornment, TextField } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import axios from 'axios';
-
+import SimpleAlert from './Pages/Alert';
 const drawerWidth = 240;
 const navItems = ['Home', 'Raises', 'Others'];
 
@@ -14,9 +14,13 @@ export default function Main(props) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
+  const [selectedValue, setSelectedValue] = useState('others');
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
+  };
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+    navigate(`/${event.target.value}`);
   };
 
   const drawer = (
@@ -29,16 +33,22 @@ export default function Main(props) {
         {navItems.map((item) => (
           item === 'Others' ? (
             <ListItem key={item} disablePadding sx={{ display: 'flex', justifyContent: 'center' }}>
-              <FormControl variant="standard">
-                <Select
-                  value={item.toLowerCase()}
-                  onChange={(e) => navigate(`/${e.target.value}`)}
-                >
-                  <MenuItem value="home">Home</MenuItem>
-                  <MenuItem value="raises">Raises</MenuItem>
-                  <MenuItem value="contact">Contact</MenuItem>
-                </Select>
-              </FormControl>
+          <FormControl variant="standard">
+      
+      <Select
+      
+        value={selectedValue}
+        onChange={handleChange}
+        sx={{ color: 'black', width: '100px' }}
+      >
+        <MenuItem value="others">others</MenuItem>
+        <MenuItem value="home">Home</MenuItem>
+        <MenuItem value="raises">Raises</MenuItem>
+        <MenuItem value="appointment">Appointment</MenuItem>
+      </Select>
+    </FormControl>
+
+             
             </ListItem>
           ) : (
             <ListItem key={item} disablePadding>
@@ -71,14 +81,16 @@ export default function Main(props) {
     const { name, value } = e.target;
     setHeve((heve) => ({ ...heve, [name]: value }));
   };
-
+  const [alertOpen, setAlertOpen] = useState(false);
   const addHandler = () => {
     axios.post("http://localhost:3005/newheve", heve)
       .then((response) => {
-        alert("Record Saved");
+        setAlertOpen(true)
       })
       .catch((err) => console.log(err));
   };
+
+
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -98,18 +110,20 @@ export default function Main(props) {
           <Box sx={{ display: 'flex', flexGrow: 1, justifyContent: 'flex-end' }}>
             {!isMobile && navItems.map((item) => (
               item === 'Others' ? (
-                <FormControl variant="standard" key={item}>
-                  <Select
-                    value={item.toLowerCase()}
-                    onChange={(e) => navigate(`/${e.target.value}`)}
-                    sx={{ color: '#000' }}
-                    className='abarbtn'
-                  >
-                    <MenuItem value="home">Home</MenuItem>
-                    <MenuItem value="raises">Raises</MenuItem>
-                    <MenuItem value="contact">Contact</MenuItem>
-                  </Select>
-                </FormControl>
+                <FormControl variant="standard">
+      
+      <Select
+      
+        value={selectedValue}
+        onChange={handleChange}
+        sx={{ color: 'black', width: '100px' }}
+      >
+        <MenuItem value="others">others</MenuItem>
+        <MenuItem value="home">Home</MenuItem>
+        <MenuItem value="raises">Raises</MenuItem>
+        <MenuItem value="appointment">Appointment</MenuItem>
+      </Select>
+    </FormControl>
               ) : (
                 <Button
                   key={item}
@@ -178,6 +192,8 @@ export default function Main(props) {
           />
         </Box>
       </Box>
+      <SimpleAlert open={alertOpen} onClose={() => setAlertOpen(false)} message="Heve Saved" />
     </Box>
+    
   );
 }

@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Button, TextField } from '@mui/material';
 import axios from 'axios';
 
+import SimpleAlert from '../Pages/Alert';
 const Heveedit = (props) => {
     var [inputs, setInputs] = useState(props.data);
-
+    const [alertOpen, setAlertOpen] = useState(false);
     const inputHandler = (event) => {
         const { name, value } = event.target;
         setInputs((inputs) => ({ ...inputs, [name]: value }));
@@ -14,7 +15,7 @@ const Heveedit = (props) => {
         if (props.method === 'put') {
             axios.put("http://localhost:3005/Heveedit/" + inputs._id, inputs)
                 .then((response) => {
-                    alert("Record updated");
+                    setAlertOpen(true)
                     window.location.reload(false);
                 })
                 .catch(err => console.log(err));
@@ -44,6 +45,8 @@ const Heveedit = (props) => {
 
     return (
         <div>
+            
+              <SimpleAlert open={alertOpen} onClose={() => setAlertOpen(false)} message="Appointment cancelled" />
             <TextField
                 id="standard-textarea"
                 label="Leve"
